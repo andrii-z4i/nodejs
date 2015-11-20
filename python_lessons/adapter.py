@@ -1,20 +1,6 @@
 import abc
 
-class IDevice(object):
-
-    @abc.abstractmethod
-    def play(self):
-        pass
-
-    @abc.abstractmethod
-    def stop(self):
-        pass
-
-    @abc.abstractmethod
-    def forward(self):
-        pass
-
-class OldDevice(IDevice):
+class OldDevice(object):
 
     def __init__(self):
         super(OldDevice, self).__init__()
@@ -29,7 +15,7 @@ class OldDevice(IDevice):
         print "do forward"
 
 
-class AdapterDevice(IDevice):
+class AdapterDevice(object):
 
     def set_device(self, device):
         self._device = device
@@ -37,13 +23,13 @@ class AdapterDevice(IDevice):
     def fast_forward(self):
         print  "doesn't support by device" 
 
-    def play(self):
+    def start_play(self):
         self._device.play()
 
-    def stop(self):
+    def stop_play(self):
         self._device.stop()
 
-    def forward(self):
+    def forward_music(self):
         self._device.forward()
      
 
@@ -53,21 +39,19 @@ class Client(object):
         self._device = device
     
     def play(self):
-        self._device.play()
+        self._device.start_play()
 
     def stop(self):
-        self._device.stop()
+        self._device.stop_play()
 
     def forward(self):
-        self._device.forward()
+        self._device.forward_music()
 
     def fast_forward(self):
         self._device.fast_forward()
 
-# introduce base functionality in interface
-# modify our old class by inheritance of interface
-# study our client to communicate with interface
-# introduce adapter hides old functionality of old device
+# learn our client to communicate with adapter class 
+# introduce adapter which hides functionality of old device
 # provide to client adapter
 
 old_device = OldDevice()
