@@ -16,5 +16,13 @@ app.get('/person/:id', function(req, res) {
     res.send('<html><head></head><body><h1>Hello world!<h1><h3>' + req.params.id + '</h3></body></html>')
 });
 
+app.get('/connect/:id', function(req, res) {
+    if (req.params.id === 'me') {
+        res.send({ firstname: 'Andrii', lastname: 'Kozin' });
+    }
+    else {
+        res.send({ firstname: req.params.id});
+    }
+})
 
 app.listen(port);
