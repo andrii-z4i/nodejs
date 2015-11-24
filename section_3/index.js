@@ -1,5 +1,5 @@
 var express = require('express');
-
+var bodyParser = require('body-parser');
 var app = express();
 
 var port = process.env.PORT || 3000;
@@ -12,7 +12,7 @@ app.use('/', function(req, res, next){
 app.set('view engine', 'ejs');
 
 app.get('/person/:person', function(req, res) {
-    res.render('person', { ID: req.params.person });
+    res.render('person', { ID: req.params.person, Qstr: req.query.qstr });
 });
 
 app.get('/api', function(req, res) {
@@ -30,6 +30,21 @@ app.get('/connect/:id', function(req, res) {
     else {
         res.send({ firstname: req.params.id});
     }
-})
+});
+
+var urlEncodedParser = bodyParser.urlencoded({ extended: false});
+var jsonParse = bodyParser.json();
+
+app.post('/personjson', jsonParse, function(req, res){
+    res.send('Thank you for json data!');
+    console.log(req.body.firstname);
+    console.log(req.body.lastname);
+});
+
+app.post('/person', urlEncodedParser, function(req, res){
+    res.send('Thank you!');
+    console.log(req.body.firstname);
+    console.log(req.body.lastname);
+});
 
 app.listen(port);
